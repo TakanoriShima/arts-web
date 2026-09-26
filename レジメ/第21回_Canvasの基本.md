@@ -56,7 +56,7 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ```
 
-- `document.getElementById("game")`：HTML の中から、`id` が `game` の要素（ここでは `<canvas>`）を取り出す。
+- `document.getElementById("game")`：HTML の中から、`id` が `game` の要素（ここでは `<canvas>`）を取り出す。`document` は、ブラウザに表示している HTML のページ全体のこと。
 - `canvas.getContext("2d")`：キャンバスに絵を描くための道具（ペンや絵の具のようなもの）を取り出す。`ctx` は context（コンテキスト）の略。
 - この授業では、この 2 行を「Canvas を使うときの決まった書き方」として、`main.js` の最初に書く。
 - `getElementById` の `"game"` と、`<canvas>` の `id="game"` は、同じ名前にする。違うと、エラーになり何も描かれない。
