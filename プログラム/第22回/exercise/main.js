@@ -1,4 +1,4 @@
-// 演習・発展（実行確認用の完成コード）
+// 演習（実行確認用の完成コード）
 // 第 21 回の exercise の player（色・大きさ）を引き継いでいる。
 
 // ===== 準備 =====
@@ -30,13 +30,8 @@ function drawBackground() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-// 発展：30 フレームごとに、自機の色を切り替える
 function drawPlayer() {
-  if (Math.floor(frameCount / 30) % 2 === 0) {
-    ctx.fillStyle = "#66ff66";
-  } else {
-    ctx.fillStyle = "#ffff66";
-  }
+  ctx.fillStyle = "#66ff66";
   ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 

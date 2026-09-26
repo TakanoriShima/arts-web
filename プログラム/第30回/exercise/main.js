@@ -1,7 +1,10 @@
 // 演習・発展（実行確認用の完成コード）
 // 第 29 回の exercise/main.js の続きから作っている。
-// 演習２で変えた値：自機の速さ 6 → 7、弾の間隔 15 → 12、残機 3 → 5（index.html の LIVES の最初の数字も 5）
-// 発展：ハイスコア（HTML に表示）。Enter キーでのリスタートは第 28 回の発展から引き継いでいる。
+// 演習２：遊びにくかった所 … 敵にすぐ当たって、残機がすぐなくなる
+//         予測 … 残機を増やし、弾の間隔を短くすれば、長く遊べるはず
+//         変更 … 残機 3 → 5（index.html の LIVES の最初の数字も 5）、弾の間隔 15 → 12、自機の速さ 6 → 7
+//         結果 … 長く遊べるようになった
+// 発展：Enter キーでのリスタート（第 28 回の発展から引き継いでいる）
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");
@@ -12,7 +15,6 @@ let gameState = "play";
 let score = 0;
 let lives = 5;
 let frameCount = 0;
-let highScore = 0;               // 発展：ハイスコア（リスタートしても戻さない）
 
 // ===== 自機・弾・敵 =====
 const player = { x: 180, y: 430, w: 40, h: 40, speed: 7 };
@@ -151,11 +153,6 @@ function checkPlayerHit() {
         gameState = "gameover";
         $("#finalScore").text(score);
         $("#gameOverPanel").show();
-        // 発展：ハイスコアを更新して表示する
-        if (score > highScore) {
-          highScore = score;
-          $("#highScore").text(highScore);
-        }
       }
       break;
     }
