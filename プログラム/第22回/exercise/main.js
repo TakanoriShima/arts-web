@@ -8,7 +8,7 @@ const ctx = canvas.getContext("2d");
 let frameCount = 0;
 
 // ===== 自機 =====
-const player = { x: 180, y: 430, w: 40, h: 40, speed: 3 };
+const player = { x: 180, y: 430, w: 40, h: 40, speed: 6 };
 
 // ===== 更新 =====
 // 演習2：左へ動かし、左端から出たら右端に戻す
