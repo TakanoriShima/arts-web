@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/md2pdf.py\" --hook",
+            "timeout": 90,
+            "statusMessage": "レジメの PDF を作成中..."
+          }
+        ]
+      }
+    ]
+  }
+}
