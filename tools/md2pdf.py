@@ -2,7 +2,7 @@
 """レジメ（Markdown）を PDF に変換する。
 
 使い方:
-  python tools/md2pdf.py レジメ/第17回_JavaScriptの基本2.md   # 指定したファイルを変換
+  python tools/md2pdf.py "レジメ/第17回_JavaScriptの基本2（データ型・演算子・文字列）.md"   # 指定したファイルを変換
   python tools/md2pdf.py --all                               # レジメ/ 内のすべてを変換
   python tools/md2pdf.py --hook                              # Claude Code のフック用（stdin の JSON を読む）
 
