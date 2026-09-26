@@ -33,9 +33,6 @@ document.addEventListener("keydown", function (event) {
   if (event.key === " ") {
     isSpacePressed = true;
   }
-  if (event.key === "Enter" && gameState === "gameover") {
-    resetGame();
-  }
 });
 
 document.addEventListener("keyup", function (event) {
