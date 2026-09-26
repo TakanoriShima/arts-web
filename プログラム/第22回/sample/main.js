@@ -10,7 +10,7 @@ const player = { x: 184, y: 440, w: 32, h: 32, speed: 5 };
 
 // ===== 更新 =====
 function updatePlayer() {
-  player.x += player.speed;
+  player.x += player.speed;      // const の player でも、中の値は書き換えられる
   // 右端から出たら、左端に戻す
   if (player.x > canvas.width) {
     player.x = -player.w;
@@ -33,17 +33,9 @@ function drawPlayer() {
   ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`FRAME: ${frameCount}`, 10, 30);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
-  drawUI();
 }
 
 // ===== ゲームループ =====

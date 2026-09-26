@@ -6,7 +6,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <p>SCORE: <span id="score">0</span>　LIVES: <span id="lives">5</span>　HIGH SCORE: <span id="highScore">0</span></p>
+  <div id="titlePanel">
+    <p>SHOOTING GAME</p>
+    <p>← → で移動、スペースで発射</p>
+    <button id="startButton">スタート</button>
+  </div>
+  <div id="gameOverPanel">
+    <p>GAME OVER</p>
+    <p>最終得点：<span id="finalScore">0</span></p>
+    <button id="restartButton">リスタート</button>
+  </div>
   <canvas id="game" width="400" height="500"></canvas>
+  <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha384-fgGyf7Mo7DURSOMnOy7ed+dkq5Job205Gnzu6QIg0BOHKaqt4D76Dt8VlDCzcMHV" crossorigin="anonymous"></script>
   <script src="main.js"></script>
 </body>
 </html>

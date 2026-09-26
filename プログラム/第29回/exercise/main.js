@@ -1,7 +1,6 @@
 // 演習・発展（実行確認用の完成コード）
-//
-// 演習3：色を変えた（背景・自機・弾・敵・文字）
-// 発展：自機と敵を、複数の四角形で描く。背景に流れる星を描く。
+// 演習：見た目（色）とゲームバランスを調整した。
+// 発展：自機と敵を複数の四角形で描く。背景に流れる星を描く。表示の更新を updateUI にまとめる。
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");
@@ -57,6 +56,12 @@ document.addEventListener("keyup", function (event) {
   }
 });
 
+// 発展：得点と残機の表示の更新を、1 つの関数にまとめる
+function updateUI() {
+  $("#score").text(score);
+  $("#lives").text(lives);
+}
+
 // ===== リスタート =====
 function resetGame() {
   gameState = "play";
@@ -67,7 +72,11 @@ function resetGame() {
   bullets = [];
   enemies = [];
   shotTimer = 0;
+  updateUI();
+  $("#gameOverPanel").hide();
 }
+
+$("#restartButton").on("click", resetGame);
 
 // ===== 更新 =====
 function updatePlayer() {
@@ -93,11 +102,8 @@ function updateBullets() {
     bullets.push({ x: player.x + player.w / 2 - 3, y: player.y, w: 6, h: 16, speed: 10 });
     shotTimer = 15;
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
@@ -105,11 +111,8 @@ function updateEnemies() {
   if (frameCount % 45 === 0) {
     enemies.push({ x: Math.floor(Math.random() * (canvas.width - 40)), y: -40, w: 40, h: 40, speed: 3 });
   }
-  for (let i = enemies.length - 1; i >= 0; i--) {
+  for (let i = 0; i < enemies.length; i++) {
     enemies[i].y += enemies[i].speed;
-    if (enemies[i].y > canvas.height) {
-      enemies.splice(i, 1);
-    }
   }
 }
 
@@ -120,6 +123,22 @@ function updateStars() {
     if (stars[i].y > canvas.height) {
       stars[i].y = 0;
       stars[i].x = Math.floor(Math.random() * canvas.width);
+    }
+  }
+}
+
+function removeEnemies() {
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    if (enemies[i].y > canvas.height) {
+      enemies.splice(i, 1);
+    }
+  }
+}
+
+function removeBullets() {
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    if (bullets[i].y + bullets[i].h < 0) {
+      bullets.splice(i, 1);
     }
   }
 }
@@ -135,6 +154,7 @@ function checkBulletHits() {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
         score += 50;
+        updateUI();
         break;
       }
     }
@@ -146,8 +166,11 @@ function checkPlayerHit() {
     if (isHit(player, enemies[i])) {
       enemies.splice(i, 1);
       lives -= 1;
+      updateUI();
       if (lives <= 0) {
         gameState = "gameover";
+        $("#finalScore").text(score);
+        $("#gameOverPanel").show();
       }
       break;
     }
@@ -160,6 +183,8 @@ function update() {
   updateBullets();
   updateEnemies();
   updateStars();
+  removeEnemies();
+  removeBullets();
   checkBulletHits();
   checkPlayerHit();
 }
@@ -201,37 +226,11 @@ function drawEnemies() {
   }
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffcc";
-  ctx.font = "22px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`SCORE: ${score}`, 10, 30);
-  ctx.textAlign = "right";
-  ctx.fillText(`LIVES: ${lives}`, canvas.width - 10, 30);
-}
-
-function drawGameOver() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#ffffff";
-  ctx.textAlign = "center";
-  ctx.font = "40px sans-serif";
-  ctx.fillText("GAME OVER", canvas.width / 2, 210);
-  ctx.font = "24px sans-serif";
-  ctx.fillText(`SCORE: ${score}`, canvas.width / 2, 260);
-  ctx.font = "20px sans-serif";
-  ctx.fillText("Enter キーでリスタート", canvas.width / 2, 310);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
   drawEnemies();
-  drawUI();
-  if (gameState === "gameover") {
-    drawGameOver();
-  }
 }
 
 // ===== ゲームループ =====

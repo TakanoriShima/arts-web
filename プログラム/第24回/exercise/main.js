@@ -7,7 +7,7 @@ const ctx = canvas.getContext("2d");
 // ===== ゲームの状態 =====
 let frameCount = 0;
 
-// ===== 自機・弾・敵 =====
+// ===== 自機・弾 =====
 const player = { x: 180, y: 430, w: 40, h: 40, speed: 6 };
 let bullets = [];
 let shotTimer = 0;
@@ -62,16 +62,15 @@ function updateBullets() {
     shotTimer -= 1;
   }
   if (isSpacePressed && shotTimer === 0) {
-    // 発展：自機の左右の端から、2 発同時に撃つ
+    // 演習１：弾の大きさ 6 × 16、速さ 10。自機の中央から出す（6 の半分の 3 を引く）
+    bullets.push({ x: player.x + player.w / 2 - 3, y: player.y, w: 6, h: 16, speed: 10 });
+    // 発展：自機の左端と右端からも、同時に撃つ
     bullets.push({ x: player.x, y: player.y, w: 6, h: 16, speed: 10 });
     bullets.push({ x: player.x + player.w - 6, y: player.y, w: 6, h: 16, speed: 10 });
-    shotTimer = 15;                // 演習2：連射の間隔を 15 にした
+    shotTimer = 15;                // 演習２：連射の間隔を 15 にした
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
@@ -99,19 +98,10 @@ function drawBullets() {
   }
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`FRAME: ${frameCount}`, 10, 30);
-  ctx.fillText(`BULLETS: ${bullets.length}`, 10, 60);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
-  drawUI();
 }
 
 // ===== ゲームループ =====

@@ -68,12 +68,9 @@ function updateBullets() {
     bullets.push({ x: player.x + player.w / 2 - 2, y: player.y, w: 4, h: 12, speed: 8 });
     shotTimer = 10;
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  // すべての弾を上へ動かす
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    // 画面の上に出た弾を消す
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
@@ -82,11 +79,26 @@ function updateEnemies() {
   if (frameCount % 60 === 0) {
     enemies.push({ x: Math.floor(Math.random() * (canvas.width - 32)), y: -32, w: 32, h: 32, speed: 2 });
   }
-  for (let i = enemies.length - 1; i >= 0; i--) {
+  // すべての敵を下へ動かす
+  for (let i = 0; i < enemies.length; i++) {
     enemies[i].y += enemies[i].speed;
-    // 画面の下に出た敵を消す
+  }
+}
+
+// 画面の下に出た敵を消す
+function removeEnemies() {
+  for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
       enemies.splice(i, 1);
+    }
+  }
+}
+
+// 画面の上に出た弾を消す
+function removeBullets() {
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    if (bullets[i].y + bullets[i].h < 0) {
+      bullets.splice(i, 1);
     }
   }
 }
@@ -104,6 +116,7 @@ function checkBulletHits() {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
         score += 100;
+        $("#score").text(score);
         break;                   // この弾は消えたので、次の弾へ
       }
     }
@@ -116,6 +129,7 @@ function checkPlayerHit() {
     if (isHit(player, enemies[i])) {
       enemies.splice(i, 1);
       lives -= 1;
+      $("#lives").text(lives);
       break;                     // 1 フレームで減る残機は 1 つまで
     }
   }
@@ -126,6 +140,8 @@ function update() {
   updatePlayer();
   updateBullets();
   updateEnemies();
+  removeEnemies();
+  removeBullets();
   checkBulletHits();
   checkPlayerHit();
 }
@@ -155,20 +171,11 @@ function drawEnemies() {
   }
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`SCORE: ${score}`, 10, 30);
-  ctx.fillText(`LIVES: ${lives}`, 10, 60);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
   drawEnemies();
-  drawUI();
 }
 
 // ===== ゲームループ =====

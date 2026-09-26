@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 // ===== ゲームの状態 =====
 let frameCount = 0;              // ゲーム開始からのフレーム数
 
-// ===== 自機・弾・敵 =====
+// ===== 自機・弾 =====
 const player = { x: 184, y: 440, w: 32, h: 32, speed: 5 };
 let bullets = [];
 let shotTimer = 0;               // 次の弾を撃てるまでのフレーム数
@@ -65,12 +65,9 @@ function updateBullets() {
     bullets.push({ x: player.x + player.w / 2 - 2, y: player.y, w: 4, h: 12, speed: 8 });
     shotTimer = 10;
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  // すべての弾を上へ動かす
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    // 画面の上に出た弾を消す
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
@@ -98,19 +95,10 @@ function drawBullets() {
   }
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`FRAME: ${frameCount}`, 10, 30);
-  ctx.fillText(`BULLETS: ${bullets.length}`, 10, 60);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
-  drawUI();
 }
 
 // ===== ゲームループ =====

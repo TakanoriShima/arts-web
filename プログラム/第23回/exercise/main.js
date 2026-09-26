@@ -16,7 +16,7 @@ let isRightPressed = false;
 let isUpPressed = false;         // 発展
 let isDownPressed = false;       // 発展
 
-// 演習2：A キー・D キーでも動かせるようにする
+// 演習２：A キー・D キーでも動かせるようにする
 document.addEventListener("keydown", function (event) {
   if (event.key === "ArrowLeft" || event.key === "a") {
     isLeftPressed = true;
@@ -92,17 +92,9 @@ function drawPlayer() {
   ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`FRAME: ${frameCount}`, 10, 30);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
-  drawUI();
 }
 
 // ===== ゲームループ =====

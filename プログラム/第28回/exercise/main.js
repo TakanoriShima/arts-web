@@ -31,6 +31,7 @@ document.addEventListener("keydown", function (event) {
   if (event.key === " ") {
     isSpacePressed = true;
   }
+  // 発展：Enter キーでもリスタートする（ゲームオーバーのときだけ）
   if (event.key === "Enter" && gameState === "gameover") {
     resetGame();
   }
@@ -49,6 +50,7 @@ document.addEventListener("keyup", function (event) {
 });
 
 // ===== リスタート =====
+// 演習２：変数と HTML の表示を最初の状態に戻し、パネルを隠す（穴埋め）
 function resetGame() {
   gameState = "play";
   score = 0;
@@ -58,7 +60,12 @@ function resetGame() {
   bullets = [];
   enemies = [];
   shotTimer = 0;
+  $("#score").text(score);
+  $("#lives").text(lives);
+  $("#gameOverPanel").hide();
 }
+
+$("#restartButton").on("click", resetGame);
 
 // ===== 更新 =====
 function updatePlayer() {
@@ -84,11 +91,8 @@ function updateBullets() {
     bullets.push({ x: player.x + player.w / 2 - 3, y: player.y, w: 6, h: 16, speed: 10 });
     shotTimer = 15;
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
@@ -96,10 +100,23 @@ function updateEnemies() {
   if (frameCount % 45 === 0) {
     enemies.push({ x: Math.floor(Math.random() * (canvas.width - 40)), y: -40, w: 40, h: 40, speed: 3 });
   }
-  for (let i = enemies.length - 1; i >= 0; i--) {
+  for (let i = 0; i < enemies.length; i++) {
     enemies[i].y += enemies[i].speed;
+  }
+}
+
+function removeEnemies() {
+  for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
       enemies.splice(i, 1);
+    }
+  }
+}
+
+function removeBullets() {
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    if (bullets[i].y + bullets[i].h < 0) {
+      bullets.splice(i, 1);
     }
   }
 }
@@ -115,19 +132,24 @@ function checkBulletHits() {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
         score += 50;
+        $("#score").text(score);
         break;
       }
     }
   }
 }
 
+// 演習１：残機が 0 になったら、ゲームを止めてパネルを表示する
 function checkPlayerHit() {
   for (let i = enemies.length - 1; i >= 0; i--) {
     if (isHit(player, enemies[i])) {
       enemies.splice(i, 1);
       lives -= 1;
+      $("#lives").text(lives);
       if (lives <= 0) {
         gameState = "gameover";
+        $("#finalScore").text(score);
+        $("#gameOverPanel").show();
       }
       break;
     }
@@ -139,6 +161,8 @@ function update() {
   updatePlayer();
   updateBullets();
   updateEnemies();
+  removeEnemies();
+  removeBullets();
   checkBulletHits();
   checkPlayerHit();
 }
@@ -168,38 +192,11 @@ function drawEnemies() {
   }
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffcc";
-  ctx.font = "22px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`SCORE: ${score}`, 10, 30);
-  ctx.textAlign = "right";
-  ctx.fillText(`LIVES: ${lives}`, canvas.width - 10, 30);
-}
-
-// 発展：画面を半透明の黒で暗くし、最終得点も表示する
-function drawGameOver() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#ffffff";
-  ctx.textAlign = "center";
-  ctx.font = "40px sans-serif";
-  ctx.fillText("GAME OVER", canvas.width / 2, 210);
-  ctx.font = "24px sans-serif";
-  ctx.fillText(`SCORE: ${score}`, canvas.width / 2, 260);
-  ctx.font = "20px sans-serif";
-  ctx.fillText("Enter キーでリスタート", canvas.width / 2, 310);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
   drawEnemies();
-  drawUI();
-  if (gameState === "gameover") {
-    drawGameOver();
-  }
 }
 
 // ===== ゲームループ =====

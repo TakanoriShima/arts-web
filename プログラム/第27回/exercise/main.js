@@ -68,11 +68,8 @@ function updateBullets() {
     bullets.push({ x: player.x + player.w / 2 - 3, y: player.y, w: 6, h: 16, speed: 10 });
     shotTimer = 15;
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
@@ -80,15 +77,29 @@ function updateEnemies() {
   if (frameCount % 45 === 0) {
     enemies.push({ x: Math.floor(Math.random() * (canvas.width - 40)), y: -40, w: 40, h: 40, speed: 3 });
   }
-  for (let i = enemies.length - 1; i >= 0; i--) {
+  for (let i = 0; i < enemies.length; i++) {
     enemies[i].y += enemies[i].speed;
+  }
+}
+
+// 発展：敵を画面の下へ逃したら、得点を 50 減らす（0 より小さくしない）
+function removeEnemies() {
+  for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
       enemies.splice(i, 1);
-      // 発展：敵を逃したら、得点を 50 減らす（0 より小さくしない）
       score -= 50;
       if (score < 0) {
         score = 0;
       }
+      $("#score").text(score);
+    }
+  }
+}
+
+function removeBullets() {
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    if (bullets[i].y + bullets[i].h < 0) {
+      bullets.splice(i, 1);
     }
   }
 }
@@ -97,6 +108,7 @@ function isHit(a, b) {
   return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 }
 
+// 演習１：得点の表示を jQuery に書き換える
 function checkBulletHits() {
   for (let i = bullets.length - 1; i >= 0; i--) {
     for (let j = enemies.length - 1; j >= 0; j--) {
@@ -104,17 +116,20 @@ function checkBulletHits() {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
         score += 50;
+        $("#score").text(score);
         break;
       }
     }
   }
 }
 
+// 演習２：敵にぶつかったら残機を減らし、表示を更新する
 function checkPlayerHit() {
   for (let i = enemies.length - 1; i >= 0; i--) {
     if (isHit(player, enemies[i])) {
       enemies.splice(i, 1);
       lives -= 1;
+      $("#lives").text(lives);
       break;
     }
   }
@@ -125,6 +140,8 @@ function update() {
   updatePlayer();
   updateBullets();
   updateEnemies();
+  removeEnemies();
+  removeBullets();
   checkBulletHits();
   checkPlayerHit();
 }
@@ -154,28 +171,11 @@ function drawEnemies() {
   }
 }
 
-// 演習1：得点を左上、残機を右上に表示する
-// 発展：残機の数だけ、小さな四角形を並べて描く
-function drawUI() {
-  ctx.fillStyle = "#ffffcc";
-  ctx.font = "22px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`SCORE: ${score}`, 10, 30);
-  ctx.textAlign = "right";
-  ctx.fillText(`LIVES: ${lives}`, canvas.width - 10, 30);
-
-  ctx.fillStyle = "#66ff66";
-  for (let i = 0; i < lives; i++) {
-    ctx.fillRect(canvas.width - 22 - i * 18, 42, 12, 12);
-  }
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
   drawEnemies();
-  drawUI();
 }
 
 // ===== ゲームループ =====

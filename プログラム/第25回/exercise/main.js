@@ -66,24 +66,36 @@ function updateBullets() {
     bullets.push({ x: player.x + player.w / 2 - 3, y: player.y, w: 6, h: 16, speed: 10 });
     shotTimer = 15;
   }
-  for (let i = bullets.length - 1; i >= 0; i--) {
+  for (let i = 0; i < bullets.length; i++) {
     bullets[i].y -= bullets[i].speed;
-    if (bullets[i].y + bullets[i].h < 0) {
-      bullets.splice(i, 1);
-    }
   }
 }
 
-// 演習1：敵の大きさ 40、出現間隔 45 フレーム
+// 演習１：敵の大きさ 40、出現間隔 45 フレーム
 // 発展：敵ごとの速さを 1〜3 の乱数で決める
 function updateEnemies() {
   if (frameCount % 45 === 0) {
     enemies.push({ x: Math.floor(Math.random() * (canvas.width - 40)), y: -40, w: 40, h: 40, speed: Math.floor(Math.random() * 3) + 1 });
   }
-  for (let i = enemies.length - 1; i >= 0; i--) {
+  for (let i = 0; i < enemies.length; i++) {
     enemies[i].y += enemies[i].speed;
+  }
+}
+
+// 演習２：画面の下に出た敵を消す
+function removeEnemies() {
+  for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
       enemies.splice(i, 1);
+    }
+  }
+}
+
+// 演習２：画面の上に出た弾を消す（穴埋め）
+function removeBullets() {
+  for (let i = bullets.length - 1; i >= 0; i--) {
+    if (bullets[i].y + bullets[i].h < 0) {
+      bullets.splice(i, 1);
     }
   }
 }
@@ -93,6 +105,8 @@ function update() {
   updatePlayer();
   updateBullets();
   updateEnemies();
+  removeEnemies();
+  removeBullets();
 }
 
 // ===== 描画 =====
@@ -120,21 +134,11 @@ function drawEnemies() {
   }
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`FRAME: ${frameCount}`, 10, 30);
-  ctx.fillText(`BULLETS: ${bullets.length}`, 10, 60);
-  ctx.fillText(`ENEMIES: ${enemies.length}`, 10, 90);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
   drawBullets();
   drawEnemies();
-  drawUI();
 }
 
 // ===== ゲームループ =====

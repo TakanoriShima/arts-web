@@ -64,17 +64,9 @@ function drawPlayer() {
   ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 
-function drawUI() {
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "20px sans-serif";
-  ctx.textAlign = "left";
-  ctx.fillText(`FRAME: ${frameCount}`, 10, 30);
-}
-
 function draw() {
   drawBackground();
   drawPlayer();
-  drawUI();
 }
 
 // ===== ゲームループ =====
