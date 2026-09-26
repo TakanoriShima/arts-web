@@ -1,32 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="560" height="250" viewBox="0 0 560 250" font-family="Yu Gothic, Meiryo, sans-serif" font-size="14">
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="270" viewBox="0 0 560 270" font-family="Yu Gothic, Meiryo, sans-serif" font-size="14">
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
       <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
     </marker>
   </defs>
-  <rect x="0" y="0" width="560" height="250" fill="#fff"/>
+  <rect x="0" y="0" width="560" height="270" fill="#fff"/>
   <text x="280" y="20" text-anchor="middle" font-size="13">弾 3 発・敵 2 体のとき。①〜⑥ の順に、isHit で 1 組ずつ調べる</text>
-  <!-- column headers -->
-  <text x="235" y="52" text-anchor="middle" font-weight="bold">敵 1</text>
-  <text x="335" y="52" text-anchor="middle" font-weight="bold">敵 0</text>
-  <text x="285" y="72" text-anchor="middle" font-size="12">内側の for（j）：敵を 1 体ずつ →</text>
-  <!-- row headers -->
-  <text x="120" y="112" text-anchor="middle" font-weight="bold">弾 2</text>
-  <text x="120" y="162" text-anchor="middle" font-weight="bold">弾 1</text>
-  <text x="120" y="212" text-anchor="middle" font-weight="bold">弾 0</text>
-  <text x="55" y="160" text-anchor="middle" font-size="12">外側の for（i）</text>
-  <text x="55" y="178" text-anchor="middle" font-size="12">弾を 1 発ずつ</text>
-  <line x1="55" y1="190" x2="55" y2="225" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
-  <!-- cells -->
-  <g text-anchor="middle">
-    <rect x="185" y="85" width="100" height="40" fill="#eee" stroke="#000"/><text x="235" y="111">① isHit?</text>
-    <rect x="285" y="85" width="100" height="40" fill="#eee" stroke="#000"/><text x="335" y="111">② isHit?</text>
-    <rect x="185" y="135" width="100" height="40" fill="#eee" stroke="#000"/><text x="235" y="161">③ isHit?</text>
-    <rect x="285" y="135" width="100" height="40" fill="#eee" stroke="#000"/><text x="335" y="161">④ isHit?</text>
-    <rect x="185" y="185" width="100" height="40" fill="#eee" stroke="#000"/><text x="235" y="211">⑤ isHit?</text>
-    <rect x="285" y="185" width="100" height="40" fill="#eee" stroke="#000"/><text x="335" y="211">⑥ isHit?</text>
+  <text x="280" y="40" text-anchor="middle" font-size="13" font-weight="bold">削除するので、第 25 回と同じく、弾も敵も後ろの番号から調べる</text>
+  <g transform="translate(0,20)">
+    <!-- column headers -->
+    <text x="235" y="52" text-anchor="middle" font-weight="bold">敵 1</text>
+    <text x="335" y="52" text-anchor="middle" font-weight="bold">敵 0</text>
+    <text x="285" y="72" text-anchor="middle" font-size="12">内側の for（j--）：敵を後ろから 1 体ずつ →</text>
+    <!-- row headers -->
+    <text x="120" y="112" text-anchor="middle" font-weight="bold">弾 2</text>
+    <text x="120" y="162" text-anchor="middle" font-weight="bold">弾 1</text>
+    <text x="120" y="212" text-anchor="middle" font-weight="bold">弾 0</text>
+    <text x="55" y="150" text-anchor="middle" font-size="12">外側の for（i--）</text>
+    <text x="55" y="168" text-anchor="middle" font-size="12">弾を後ろから</text>
+    <text x="55" y="186" text-anchor="middle" font-size="12">1 発ずつ</text>
+    <line x1="55" y1="194" x2="55" y2="228" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+    <!-- cells -->
+    <g text-anchor="middle">
+      <rect x="185" y="85" width="100" height="40" fill="#eee" stroke="#000"/><text x="235" y="111">① isHit?</text>
+      <rect x="285" y="85" width="100" height="40" fill="#eee" stroke="#000"/><text x="335" y="111">② isHit?</text>
+      <rect x="185" y="135" width="100" height="40" fill="#eee" stroke="#000"/><text x="235" y="161">③ isHit?</text>
+      <rect x="285" y="135" width="100" height="40" fill="#eee" stroke="#000"/><text x="335" y="161">④ isHit?</text>
+      <rect x="185" y="185" width="100" height="40" fill="#eee" stroke="#000"/><text x="235" y="211">⑤ isHit?</text>
+      <rect x="285" y="185" width="100" height="40" fill="#eee" stroke="#000"/><text x="335" y="211">⑥ isHit?</text>
+    </g>
+    <text x="400" y="104" font-size="12">true なら、その弾と敵を</text>
+    <text x="400" y="122" font-size="12">消して、得点を増やし、</text>
+    <text x="400" y="140" font-size="12">break で次の弾へ進む</text>
   </g>
-  <text x="400" y="104" font-size="12">true なら、その弾と敵を</text>
-  <text x="400" y="122" font-size="12">消して、得点を増やし、</text>
-  <text x="400" y="140" font-size="12">break で次の弾へ進む</text>
 </svg>
