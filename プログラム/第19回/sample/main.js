@@ -45,12 +45,6 @@ for (let i = 0; i < bulletYs.length; i++) {
 }
 console.log(bulletYs);           // [350, 250, 150]
 
-let totalHp = 0;
-for (let i = 0; i < enemyHps.length; i++) {
-  totalHp += enemyHps[i];
-}
-console.log(totalHp);            // 130
-
 // 配列を後ろから順に処理する
 for (let i = enemyNames.length - 1; i >= 0; i--) {
   console.log(enemyNames[i]);    // ドラゴン ゴブリン スライム

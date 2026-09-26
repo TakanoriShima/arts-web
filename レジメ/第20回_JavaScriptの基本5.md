@@ -16,9 +16,9 @@ Web_名前
 ```
 
 - `sample`：講義で使うサンプル（講義内容のコードは、すべて `sample/main.js` に書く）
-- `exercise`：演習で作るファイル（演習１〜４、発展）
+- `exercise`：演習で作るファイル（演習１〜２、発展）
 
-`sample/index.html` と `exercise/index.html` には、どちらも次の内容を書く（第 19 回の `sample/index.html` をコピーして、`<title>` だけ変えてもよい）。
+`sample/index.html` には、次の内容を書く。今回は、得点を表示する部分とボタンを HTML に用意しておく。
 
 ```html
 <!DOCTYPE html>
@@ -28,14 +28,21 @@ Web_名前
   <title>JavaScriptの基本５</title>
 </head>
 <body>
+  <p>SCORE: <span id="score">0</span></p>
+  <button id="scoreButton">得点を増やす</button>
   <script src="main.js"></script>
 </body>
 </html>
 ```
 
+- `SCORE:` の後ろの数字だけを `<span>` で囲み、`id="score"` を付けている。あとで JavaScript から、この数字の部分だけを書き換える。
+- `<button>` はボタンを表示するタグ。`id="scoreButton"` を付けている。
+
+`exercise/index.html` は、`sample/index.html` をコピーして、`<p>` と `<button>` の 2 行を消した形から始める（演習２で書き足す）。
+
 ## 講義内容
 
-以降の講義内容のコードは、`sample/main.js` に、上から順に書き足していく。書いたら `sample/index.html` をブラウザで開き、`F12` キーの開発者ツール（コンソール）で結果を確認する。
+以降の講義内容のコードは、`sample/main.js` に、上から順に書き足していく。書いたら `sample/index.html` をブラウザで開き、`F12` キーの開発者ツール（コンソール）と、画面の表示で結果を確認する。
 
 ### 1. 前回の復習
 
@@ -48,9 +55,9 @@ for (let i = 0; i < scores.length; i++) {
 }
 ```
 
-- 今回は、処理にまとめて名前を付ける「関数」と、関係のある値をまとめる「オブジェクト」を学ぶ。
+- 今回は、処理にまとめて名前を付ける「関数」と、JavaScript で Web ページの表示を変える方法を学ぶ。
 
-### 2. 関数
+### 2. 関数と引数
 
 いくつかの処理をまとめて名前を付けたものを「関数」という。一度作っておけば、名前を書くだけで何回でも実行できる。
 
@@ -74,9 +81,7 @@ showTitle();
 - 今までに使ってきた `console.log( )` や `Math.random( )` も、JavaScript に最初から用意されている関数の仲間である。
 - この授業では、読みやすくするため、関数は、呼び出すより前（ファイルの上の方）に作ることを基本にする。
 
-### 3. 引数
-
-関数に値を渡して、その値を使った処理をさせることができる。渡す値を「引数（ひきすう）」という。
+関数に値を渡して、その値を使った処理をさせることもできる。渡す値を「引数（ひきすう）」という。
 
 ```javascript
 function showDamage(damage) {
@@ -87,16 +92,9 @@ showDamage(25);                  // 25のダメージ！
 ```
 
 - `showDamage(10);` と呼び出すと、`( )` の中の `10` が、関数の `damage` に入ってから、中の処理が実行される。
-- 引数は、`,` で区切って、いくつでも渡せる。渡す順番と、受け取る順番は同じになる。
+- 引数は、`,` で区切って、いくつでも渡せる（例：`function showStatus(name, hp)`）。渡す順番と、受け取る順番は同じになる。
 
-```javascript
-function showStatus(name, hp) {
-  console.log(`${name}の残りHP：${hp}`);
-}
-showStatus("スライム", 30);      // スライムの残りHP：30
-```
-
-### 4. 戻り値
+### 3. 戻り値
 
 関数の中で計算した結果を、呼び出した場所へ返すことができる。返す値を「戻り値」といい、`return` で返す。
 
@@ -111,23 +109,7 @@ console.log(damage);             // 25
 - `calcDamage(40, 15)` の部分が、戻り値の `25` に置き換わると考える。
 - `return` が実行されると、関数はそこで終わる。
 
-真偽値（`true` / `false`）を返す関数は、`if` 文の条件に使える。
-
-```javascript
-function isAlive(hp) {
-  return hp > 0;
-}
-console.log(isAlive(30));        // true
-console.log(isAlive(0));         // false
-if (!isAlive(0)) {
-  console.log("倒れた");
-}
-```
-
-- `hp > 0` の比較の結果（`true` か `false`）が、そのまま戻り値になる。
-- 真偽値を返す関数には、`isAlive`（生きているか）のように、`is` で始まる名前を付けることが多い。
-
-### 5. 関数の外の変数を、関数の中で使う・書き換える
+### 4. 関数の外の変数を、関数の中で使う・書き換える
 
 関数の外（ファイルの上の方）で作った変数は、関数の中でも使え、書き換えることもできる。
 
@@ -144,109 +126,85 @@ console.log(score);              // 150
 - 得点のように、ゲーム全体で使い続ける値は、関数の外で作る。
 - 関数の中で作った変数（引数も含む）は、その関数の中だけで使える。関数の外からは使えない。
 
-### 6. オブジェクト
+### 5. HTML・CSS・JavaScript の役割と DOM
 
-自機の位置（x, y）、大きさ（幅, 高さ）、速さのように、関係のある値をまとめて 1 つにしたものを「オブジェクト」という。`{ }` の中に、`名前: 値` を `,` で区切って並べる。
+ここまでは、結果をコンソールに表示してきた。ここからは、JavaScript で Web ページの表示そのものを変える。
 
-```javascript
-const player = {
-  x: 100,
-  y: 400,
-  w: 32,
-  h: 32,
-  speed: 5
-};
-console.log(player.x);           // 100
-console.log(player.speed);       // 5
-player.x += player.speed;        // 右へ動かす
-console.log(player.x);           // 105
+| 技術 | 役割 |
+|---|---|
+| HTML | ページの部品（文字・ボタンなど）を用意する |
+| CSS | 部品の見た目を整える |
+| JavaScript | 部品を取り出して、中身を書き換えたり、クリックに反応したりする |
+
+ブラウザは、HTML のタグを 1 つずつ「部品」として覚えている。JavaScript は、この部品を取り出して、中身を書き換えられる。この仕組みを **DOM** という。
+
+```
+index.html の <span id="score">0</span>
+    ↓ document.getElementById("score") で取り出す
+JavaScript の scoreElement
+    ↓ scoreElement.textContent = score; で書き換える
+画面の表示が「SCORE: 150」に変わる
 ```
 
-| 名前（プロパティ） | 値 | 意味 |
-|---|---|---|
-| `x` | 100 | 横の位置 |
-| `y` | 400 | 縦の位置 |
-| `w` | 32 | 幅（width） |
-| `h` | 32 | 高さ（height） |
-| `speed` | 5 | 速さ |
-
-- オブジェクトの中の 1 つ 1 つの値を「プロパティ」という。
-- `オブジェクト.プロパティ名` で取り出す（例：`player.x`）。変数と同じように、計算や代入ができる。
-- 配列は「番号」で取り出し、オブジェクトは「名前」で取り出す。
-
-### 7. const と、配列・オブジェクトの中の値
-
-第 19 回では、要素を書き換える配列に `let` を使った。実は、`const` で作った配列やオブジェクトでも、中の値は書き換えられる。
+### 6. 要素を取り出して、表示を書き換える
 
 ```javascript
-// player = { x: 0, y: 0 };      // エラー：const の変数には、別の値を代入し直せない
-player.y = 380;                  // const のオブジェクトでも、中の値は書き換えられる
-console.log(player.y);           // 380
-
-const enemyHps = [30, 50, 80];
-enemyHps[1] = 20;                // const の配列でも、要素は書き換えられる
-console.log(enemyHps);           // [30, 20, 80]
+const scoreElement = document.getElementById("score");
+scoreElement.textContent = score;    // 画面の「0」が「150」に変わる
 ```
 
-- `const` で禁止されるのは、変数そのものへの代入し直し（`player = ...`）だけ。中の値の書き換え（`player.y = ...`、`enemyHps[1] = ...`）はできる。
-- この授業では、ここから「代入し直すことがある変数だけ `let`、それ以外は `const`」とする。
+- `document.getElementById("score")`：HTML の中から、`id` が `score` の要素（ここでは `<span>`）を取り出す。`document` は、ブラウザに表示している HTML のページ全体のこと。
+- 取り出した要素は、変数（ここでは `scoreElement`）に入れて使う。
+- `要素.textContent = 値;`：要素の中の文字を、その値に書き換える。数値を入れると、文字として表示される。
+- `<script>` を `</body>` の直前に書いているので、JavaScript が動くときには、HTML の部品がもう読み込まれている。そのため、`getElementById` で取り出せる（第 16 回の「この授業では `</body>` の直前に書く」の理由の 1 つ）。
+- `getElementById` の `"score"` と、HTML の `id="score"` は、同じ名前にする。違うと、コンソールに `Cannot set properties of null` というエラーが出る。
 
-### 8. 関数とオブジェクトを組み合わせる
-
-自機のオブジェクトを、関数で動かしたり、表示したりする。
+### 7. ボタンのクリックで関数を呼び出す
 
 ```javascript
-const screenWidth = 400;
+const scoreButton = document.getElementById("scoreButton");
 
-function updatePlayer() {
-  player.x += player.speed;
-  // 画面の端で止める
-  if (player.x + player.w > screenWidth) {
-    player.x = screenWidth - player.w;
-  }
+function addTenPoints() {
+  addScore(10);
+  scoreElement.textContent = score;
 }
 
-function showPlayer() {
-  console.log(`自機の位置：x = ${player.x}, y = ${player.y}`);
-}
-
-for (let i = 0; i < 3; i++) {
-  updatePlayer();
-  showPlayer();                  // x = 110 → 115 → 120
-}
+scoreButton.addEventListener("click", addTenPoints);
 ```
 
-- 「動かす」処理を `updatePlayer`、「表示する」処理を `showPlayer` のように、役割ごとに関数に分けると、どこで何をしているかが分かりやすくなる。
-- ゲームでは、「動かす（更新）」と「描く（描画）」を分けて、何回も繰り返す。第 22 回で、この形を使ってゲームを動かす。
+- `要素.addEventListener("click", 関数名);`：その要素がクリックされたら、指定した関数を呼び出すように、ブラウザに頼む。
+- 関数名の後ろには `( )` を付けない（`addTenPoints()` とは書かない）。`( )` を付けると、クリックを待たずに、その場で呼び出してしまう。ここでは、関数そのものをブラウザに渡している。
+- この授業では、まず、クリックで呼び出す関数を、引数なしで作る方法を使う。そのため、講義 4 の `addScore(point)` を直接渡さず、引数なしの `addTenPoints` を作り、その中から `addScore(10)` を呼び出している。
+- ボタンを押すたびに、得点が 10 増えて、画面の表示が変わることを確認する。
+- この「表示する部品を HTML に用意して、JavaScript で中身を書き換える」形で、最後に作るシューティングゲームの SCORE（得点）や LIVES（残機）を表示する。ボタンのクリックは、ゲームのリスタートボタンで使う。
 
 ## 演習
 
-`exercise/main.js` に書く。結果は、`exercise/index.html` をブラウザで開いて、`F12` の開発者ツール（コンソール）で確認する。
+`exercise/main.js` に書く。結果は、`exercise/index.html` をブラウザで開いて、コンソールと画面で確認する。
 
 ### 演習１　関数を作って呼び出す
 
 - 「GAME OVER」と表示する関数 `showGameOver` を作り、2 回呼び出す。
 - 得点を引数で受け取り、「得点：○○点」と表示する関数 `showScore` を作って、呼び出す。
 
-### 演習２　戻り値のある関数
+### 演習２　ボタンで残機を減らす
 
-- 倒した敵の数を引数で受け取り、「敵の数 × 100」を戻り値として返す関数 `calcScore` を作る。5 を渡して、戻り値を表示する。
+- `exercise/index.html` の `<script>` の上に、次の 2 行を書き足す。
 
-### 演習３　オブジェクトを作る
+```html
+  <p>LIVES: <span id="lives">3</span></p>
+  <button id="damageButton">残機を減らす</button>
+```
 
-- 敵を表すオブジェクト `enemy` を、`const` で作る。プロパティは、名前（`name`）、HP（`hp`）、x 座標（`x`）、y 座標（`y`）の 4 つ。
-- 「○○のHP：△△」と表示する。
-- HP を 20 減らしてから、もう一度表示する。
-
-### 演習４　関数とオブジェクトを組み合わせる
-
-- 得点を入れる変数を、関数の外に `let` で作る（最初は 0）。
-- ダメージを引数で受け取る関数 `damageEnemy` を作る。関数の中で、次を行う。
-  - 演習３の `enemy` の HP から、ダメージを引く。
-  - HP が 0 以下なら「○○を倒した！」と表示し、得点に 100 を足す。そうでなければ「○○の残りHP：△△」と表示する。
-- `damageEnemy` を 3 回呼び出して、敵を倒す。最後に得点を表示する。
+- `exercise/main.js` に、次を書く。
+  - 残機を入れる変数を `let` で作る（最初は 3）。
+  - `getElementById` で、`id` が `lives` の要素と、`damageButton` の要素を取り出して、変数に入れる。
+  - 残機を 1 減らし、`textContent` で表示を書き換える関数 `loseLife` を、引数なしで作る。
+  - `addEventListener` で、ボタンがクリックされたら `loseLife` が呼び出されるようにする。
+- ボタンを押すたびに、画面の LIVES の数字が 1 ずつ減ることを確認する。
 
 ### 発展（任意）
 
-- x 座標を引数で受け取り、「0 以上 かつ 400 以下」なら `true`、そうでなければ `false` を返す関数 `isInScreen` を作る。`isInScreen` を `if` 文の条件に使い、画面の外のときに「画面の外」と表示する。
-- オブジェクトを引数で受け取り、その `name`・`x`・`y` を表示する関数 `showCharacter` を作る。演習３の `enemy` を渡して呼び出す。
+- 倒した敵の数を引数で受け取り、「敵の数 × 100」を戻り値として返す関数 `calcScore` を作る。5 を渡して、戻り値を表示する。
+- HTML に `<p id="message"></p>` を書き足す。残機が 0 以下になったら、この要素に「GAME OVER」と表示する。
+- HTML に「リセット」ボタン（`id="resetButton"`）を書き足す。押すと、残機が 3 に戻り、「GAME OVER」の表示が消える（空の文字 `""` を入れる）ようにする。

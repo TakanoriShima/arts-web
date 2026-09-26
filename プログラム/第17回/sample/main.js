@@ -14,7 +14,6 @@ console.log(10 / 4);             // 2.5
 console.log(10 % 3);             // 1
 console.log(2 + 3 * 4);          // 14（掛け算が先）
 console.log((2 + 3) * 4);        // 20（( ) の中が先）
-console.log(0.1 + 0.2);          // 0.30000000000000004（小数は誤差が出ることがある）
 
 // 変数を使った計算
 const attackPower = 40;
@@ -43,7 +42,6 @@ console.log(`残りHP：${enemyHp}`);                       // 残りHP：75
 // 型の違いに注意
 console.log(5 + 3);              // 8
 console.log("5" + 3);            // 53（文字列の連結になる）
-console.log(Number("5") + 3);    // 8（文字列 "5" を数値 5 に変えてから計算）
 
 // 比較演算子と真偽値
 const currentHp = 30;

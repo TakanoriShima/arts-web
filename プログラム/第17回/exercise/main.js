@@ -26,7 +26,6 @@ console.log(bossName + "が現れた！");
 console.log(`${bossName}に${bossDamage}のダメージ！残りHPは${bossHp}です`);
 console.log(5 + 3);               // 8
 console.log("5" + 3);             // 53
-console.log(Number("5") + 3);     // 8
 
 // 演習4（実行確認用の完成コード）
 console.log(bossHp > 0);          // true（40）
