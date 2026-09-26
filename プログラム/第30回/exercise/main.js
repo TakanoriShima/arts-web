@@ -1,30 +1,24 @@
 // 演習・発展（実行確認用の完成コード）
 // 第 29 回の exercise/main.js の続きから作っている。
-// 演習２で変えた値：自機の速さ 6 → 7、弾の間隔 15 → 12、残機 3 → 5
-// 発展：タイトル画面（HTML のパネル）、ハイスコア（HTML に表示）。どちらも、これまでに学んだ HTML と jQuery だけで作る。
+// 演習２で変えた値：自機の速さ 6 → 7、弾の間隔 15 → 12、残機 3 → 5（index.html の LIVES の最初の数字も 5）
+// 発展：ハイスコア（HTML に表示）。Enter キーでのリスタートは第 28 回の発展から引き継いでいる。
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 // ===== ゲームの状態 =====
-let gameState = "title";         // 発展："title"：タイトル　"play"：プレイ中　"gameover"：ゲームオーバー
+let gameState = "play";
 let score = 0;
 let lives = 5;
 let frameCount = 0;
-let highScore = 0;               // 発展：ハイスコア（リスタートしても消さない）
+let highScore = 0;               // 発展：ハイスコア（リスタートしても戻さない）
 
 // ===== 自機・弾・敵 =====
 const player = { x: 180, y: 430, w: 40, h: 40, speed: 7 };
 let bullets = [];
 let enemies = [];
 let shotTimer = 0;
-
-// 星（ゲームの最初に 40 個作る）
-const stars = [];
-for (let i = 0; i < 40; i++) {
-  stars.push({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height), speed: Math.floor(Math.random() * 3) + 1 });
-}
 
 // ===== キー入力 =====
 let isLeftPressed = false;
@@ -58,11 +52,6 @@ document.addEventListener("keyup", function (event) {
   }
 });
 
-function updateUI() {
-  $("#score").text(score);
-  $("#lives").text(lives);
-}
-
 // ===== リスタート =====
 function resetGame() {
   gameState = "play";
@@ -73,13 +62,12 @@ function resetGame() {
   bullets = [];
   enemies = [];
   shotTimer = 0;
-  updateUI();
+  $("#score").text(score);
+  $("#lives").text(lives);
   $("#gameOverPanel").hide();
-  $("#titlePanel").hide();       // 発展：タイトルのパネルも隠す
 }
 
 $("#restartButton").on("click", resetGame);
-$("#startButton").on("click", resetGame);   // 発展：スタートボタンでもゲームを始める
 
 // ===== 更新 =====
 function updatePlayer() {
@@ -119,16 +107,6 @@ function updateEnemies() {
   }
 }
 
-function updateStars() {
-  for (let i = 0; i < stars.length; i++) {
-    stars[i].y += stars[i].speed;
-    if (stars[i].y > canvas.height) {
-      stars[i].y = 0;
-      stars[i].x = Math.floor(Math.random() * canvas.width);
-    }
-  }
-}
-
 function removeEnemies() {
   for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
@@ -156,7 +134,7 @@ function checkBulletHits() {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
         score += 50;
-        updateUI();
+        $("#score").text(score);
         break;
       }
     }
@@ -168,7 +146,7 @@ function checkPlayerHit() {
     if (isHit(player, enemies[i])) {
       enemies.splice(i, 1);
       lives -= 1;
-      updateUI();
+      $("#lives").text(lives);
       if (lives <= 0) {
         gameState = "gameover";
         $("#finalScore").text(score);
@@ -189,7 +167,6 @@ function update() {
   updatePlayer();
   updateBullets();
   updateEnemies();
-  updateStars();
   removeEnemies();
   removeBullets();
   checkBulletHits();
@@ -200,18 +177,11 @@ function update() {
 function drawBackground() {
   ctx.fillStyle = "#0a0a1f";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#aaaaff";
-  for (let i = 0; i < stars.length; i++) {
-    ctx.fillRect(stars[i].x, stars[i].y, 2, 2);
-  }
 }
 
 function drawPlayer() {
   ctx.fillStyle = "#44ddff";
-  ctx.fillRect(player.x + 12, player.y, 16, player.h);
-  ctx.fillRect(player.x, player.y + 20, player.w, 14);
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(player.x + 17, player.y + 4, 6, 8);
+  ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 
 function drawBullets() {
@@ -222,12 +192,9 @@ function drawBullets() {
 }
 
 function drawEnemies() {
+  ctx.fillStyle = "#ff5577";
   for (let i = 0; i < enemies.length; i++) {
-    ctx.fillStyle = "#ff5577";
     ctx.fillRect(enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(enemies[i].x + 8, enemies[i].y + 12, 8, 8);
-    ctx.fillRect(enemies[i].x + enemies[i].w - 16, enemies[i].y + 12, 8, 8);
   }
 }
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="260" viewBox="0 0 620 260" font-family="Yu Gothic, Meiryo, sans-serif" font-size="14">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="620" height="260" fill="#fff"/>
+  <!-- play -->
+  <rect x="20" y="60" width="200" height="90" rx="10" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="120" y="88" text-anchor="middle" font-weight="bold">gameState = "play"</text>
+  <text x="120" y="112" text-anchor="middle" font-size="13">update する（動く）</text>
+  <text x="120" y="132" text-anchor="middle" font-size="13">パネルは隠れている</text>
+  <!-- gameover -->
+  <rect x="400" y="60" width="200" height="90" rx="10" fill="#ddd" stroke="#000" stroke-width="3"/>
+  <text x="500" y="88" text-anchor="middle" font-weight="bold">gameState = "gameover"</text>
+  <text x="500" y="112" text-anchor="middle" font-size="13">update しない（止まる）</text>
+  <text x="500" y="132" text-anchor="middle" font-size="13">パネルを .show()</text>
+  <!-- arrows -->
+  <path d="M222,85 L396,85" stroke="#000" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <text x="310" y="72" text-anchor="middle" font-size="13">残機が 0 になる</text>
+  <text x="310" y="104" text-anchor="middle" font-size="12">（checkPlayerHit）</text>
+  <path d="M500,152 C500,230 120,230 120,154" stroke="#000" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <rect x="200" y="192" width="220" height="50" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="310" y="212" text-anchor="middle" font-size="13">リスタートボタンをクリック</text>
+  <text x="310" y="232" text-anchor="middle" font-size="13">→ resetGame（戻して .hide()）</text>
+  <text x="310" y="30" text-anchor="middle" font-size="13">draw（描く）は、どちらの状態でも毎フレーム行う</text>
+</svg>

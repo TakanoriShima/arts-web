@@ -1,4 +1,4 @@
-// 演習・発展（実行確認用の完成コード）
+// 演習（実行確認用の完成コード）
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");
@@ -82,16 +82,10 @@ function updateEnemies() {
   }
 }
 
-// 発展：敵を画面の下へ逃したら、得点を 50 減らす（0 より小さくしない）
 function removeEnemies() {
   for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
       enemies.splice(i, 1);
-      score -= 50;
-      if (score < 0) {
-        score = 0;
-      }
-      $("#score").text(score);
     }
   }
 }

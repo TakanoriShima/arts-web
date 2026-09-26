@@ -3,11 +3,6 @@ body {
   overflow: hidden;
 }
 
-#titlePanel {
-  padding: 8px;
-  background-color: #ddeeff;
-}
-
 #gameOverPanel {
   display: none;
   padding: 8px;

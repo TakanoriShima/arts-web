@@ -15,7 +15,7 @@ const player = { x: 180, y: 430, w: 40, h: 40, speed: 6 };   // 演習２：速�
 function updatePlayer() {
   player.x += player.speed;
   if (player.x > canvas.width) {
-    player.x = -player.w;
+    player.x = 0;
   }
 }
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="300" viewBox="0 0 560 300" font-family="Yu Gothic, Meiryo, sans-serif" font-size="15">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="560" height="300" fill="#fff"/>
+  <!-- update -->
+  <rect x="30" y="40" width="200" height="70" rx="8" fill="#eee" stroke="#000" stroke-width="2"/>
+  <text x="130" y="70" text-anchor="middle" font-weight="bold">update()</text>
+  <text x="130" y="95" text-anchor="middle">少し動かす</text>
+  <!-- draw -->
+  <rect x="330" y="40" width="200" height="70" rx="8" fill="#eee" stroke="#000" stroke-width="2"/>
+  <text x="430" y="70" text-anchor="middle" font-weight="bold">draw()</text>
+  <text x="430" y="95" text-anchor="middle">背景 → 自機 を描き直す</text>
+  <!-- rAF -->
+  <rect x="140" y="190" width="280" height="70" rx="8" fill="#fff" stroke="#000" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="280" y="220" text-anchor="middle" font-weight="bold">requestAnimationFrame(gameLoop)</text>
+  <text x="280" y="245" text-anchor="middle">次の 1 フレームを、ブラウザに頼む</text>
+  <!-- arrows -->
+  <line x1="232" y1="75" x2="326" y2="75" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="430" y1="112" x2="360" y2="186" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="200" y1="186" x2="130" y2="114" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <text x="280" y="30" text-anchor="middle" font-size="14">gameLoop の 1 回 ＝ 1 フレーム</text>
+  <text x="80" y="160" text-anchor="middle" font-size="13">また gameLoop へ</text>
+  <text x="280" y="290" text-anchor="middle" font-size="13">この輪を、1 秒に約 60 回くり返す</text>
+</svg>

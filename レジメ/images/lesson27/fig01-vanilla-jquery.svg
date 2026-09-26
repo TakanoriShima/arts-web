@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="236" viewBox="0 0 620 236" font-family="Yu Gothic, Meiryo, sans-serif" font-size="14">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="620" height="236" fill="#fff"/>
+  <!-- HTML -->
+  <rect x="200" y="15" width="220" height="56" rx="6" fill="#eee" stroke="#000" stroke-width="2"/>
+  <text x="310" y="38" text-anchor="middle" font-weight="bold">HTML の表示欄</text>
+  <text x="310" y="60" text-anchor="middle" font-size="13">&lt;span id="score"&gt;0&lt;/span&gt;</text>
+  <!-- Vanilla -->
+  <rect x="10" y="130" width="280" height="80" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="150" y="152" text-anchor="middle" font-weight="bold">第 20・26 回（JavaScript 標準）</text>
+  <text x="150" y="176" text-anchor="middle" font-size="12">document.getElementById("score")</text>
+  <text x="150" y="197" text-anchor="middle" font-size="12">.textContent = score;</text>
+  <!-- jQuery -->
+  <rect x="330" y="130" width="280" height="80" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="470" y="152" text-anchor="middle" font-weight="bold">第 27 回（jQuery）</text>
+  <text x="470" y="176" text-anchor="middle" font-size="12">$("#score")</text>
+  <text x="470" y="197" text-anchor="middle" font-size="12">.text(score);</text>
+  <!-- arrows -->
+  <line x1="150" y1="126" x2="250" y2="76" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="470" y1="126" x2="370" y2="76" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <text x="310" y="226" text-anchor="middle" font-size="13">どちらも、同じ表示欄の数字を書き換える</text>
+</svg>

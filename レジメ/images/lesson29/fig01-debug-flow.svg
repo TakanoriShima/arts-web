@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="230" viewBox="0 0 640 230" font-family="Yu Gothic, Meiryo, sans-serif" font-size="14">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="230" fill="#fff"/>
+  <g text-anchor="middle">
+    <rect x="10" y="40" width="110" height="60" rx="6" fill="#ddd" stroke="#000" stroke-width="2"/>
+    <text x="65" y="66" font-weight="bold">うまく</text>
+    <text x="65" y="86" font-weight="bold">動かない</text>
+    <rect x="140" y="40" width="110" height="60" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+    <text x="195" y="66">F12 で</text>
+    <text x="195" y="86">Console を見る</text>
+    <rect x="270" y="40" width="110" height="60" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+    <text x="325" y="66">ファイル名と</text>
+    <text x="325" y="86">行番号を見る</text>
+    <rect x="400" y="40" width="110" height="60" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+    <text x="455" y="66">その行を</text>
+    <text x="455" y="86">直す</text>
+    <rect x="530" y="40" width="100" height="60" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+    <text x="580" y="66">保存して</text>
+    <text x="580" y="86">再読み込み</text>
+  </g>
+  <line x1="122" y1="70" x2="136" y2="70" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="252" y1="70" x2="266" y2="70" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="382" y1="70" x2="396" y2="70" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="512" y1="70" x2="526" y2="70" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M580,102 C580,170 65,170 65,104" stroke="#000" stroke-width="2" fill="none" marker-end="url(#a)"/>
+  <text x="320" y="182" text-anchor="middle" font-size="13">まだ動かないときは、もう一度 Console を見る</text>
+  <text x="320" y="214" text-anchor="middle" font-size="13">エラーが出ないのに動かないときは、Console に変数名（score など）を入力して値を確かめる</text>
+</svg>

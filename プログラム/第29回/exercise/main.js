@@ -1,6 +1,6 @@
 // 演習・発展（実行確認用の完成コード）
-// 演習：見た目（色）とゲームバランスを調整した。
-// 発展：自機と敵を複数の四角形で描く。背景に流れる星を描く。表示の更新を updateUI にまとめる。
+// 第 28 回の exercise/main.js の続き。演習１（追いつき・resetGame の確認）は、第 28 回の形で満たしている。
+// 発展：色を調整した（背景・自機・弾・敵）
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");
@@ -17,12 +17,6 @@ const player = { x: 180, y: 430, w: 40, h: 40, speed: 6 };
 let bullets = [];
 let enemies = [];
 let shotTimer = 0;
-
-// 発展：星（ゲームの最初に 40 個作る）
-const stars = [];
-for (let i = 0; i < 40; i++) {
-  stars.push({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height), speed: Math.floor(Math.random() * 3) + 1 });
-}
 
 // ===== キー入力 =====
 let isLeftPressed = false;
@@ -56,12 +50,6 @@ document.addEventListener("keyup", function (event) {
   }
 });
 
-// 発展：得点と残機の表示の更新を、1 つの関数にまとめる
-function updateUI() {
-  $("#score").text(score);
-  $("#lives").text(lives);
-}
-
 // ===== リスタート =====
 function resetGame() {
   gameState = "play";
@@ -72,7 +60,8 @@ function resetGame() {
   bullets = [];
   enemies = [];
   shotTimer = 0;
-  updateUI();
+  $("#score").text(score);
+  $("#lives").text(lives);
   $("#gameOverPanel").hide();
 }
 
@@ -116,17 +105,6 @@ function updateEnemies() {
   }
 }
 
-// 発展：星を下へ流し、画面の下に出たら上に戻す
-function updateStars() {
-  for (let i = 0; i < stars.length; i++) {
-    stars[i].y += stars[i].speed;
-    if (stars[i].y > canvas.height) {
-      stars[i].y = 0;
-      stars[i].x = Math.floor(Math.random() * canvas.width);
-    }
-  }
-}
-
 function removeEnemies() {
   for (let i = enemies.length - 1; i >= 0; i--) {
     if (enemies[i].y > canvas.height) {
@@ -154,7 +132,7 @@ function checkBulletHits() {
         bullets.splice(i, 1);
         enemies.splice(j, 1);
         score += 50;
-        updateUI();
+        $("#score").text(score);
         break;
       }
     }
@@ -166,7 +144,7 @@ function checkPlayerHit() {
     if (isHit(player, enemies[i])) {
       enemies.splice(i, 1);
       lives -= 1;
-      updateUI();
+      $("#lives").text(lives);
       if (lives <= 0) {
         gameState = "gameover";
         $("#finalScore").text(score);
@@ -182,7 +160,6 @@ function update() {
   updatePlayer();
   updateBullets();
   updateEnemies();
-  updateStars();
   removeEnemies();
   removeBullets();
   checkBulletHits();
@@ -193,19 +170,11 @@ function update() {
 function drawBackground() {
   ctx.fillStyle = "#0a0a1f";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#aaaaff";
-  for (let i = 0; i < stars.length; i++) {
-    ctx.fillRect(stars[i].x, stars[i].y, 2, 2);
-  }
 }
 
-// 発展：自機を、胴体・翼・先端の 3 つの四角形で描く
 function drawPlayer() {
   ctx.fillStyle = "#44ddff";
-  ctx.fillRect(player.x + 12, player.y, 16, player.h);
-  ctx.fillRect(player.x, player.y + 20, player.w, 14);
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(player.x + 17, player.y + 4, 6, 8);
+  ctx.fillRect(player.x, player.y, player.w, player.h);
 }
 
 function drawBullets() {
@@ -215,14 +184,10 @@ function drawBullets() {
   }
 }
 
-// 発展：敵に目を描く
 function drawEnemies() {
+  ctx.fillStyle = "#ff5577";
   for (let i = 0; i < enemies.length; i++) {
-    ctx.fillStyle = "#ff5577";
     ctx.fillRect(enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(enemies[i].x + 8, enemies[i].y + 12, 8, 8);
-    ctx.fillRect(enemies[i].x + enemies[i].w - 16, enemies[i].y + 12, 8, 8);
   }
 }
 

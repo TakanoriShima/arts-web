@@ -1,4 +1,4 @@
-// 演習・発展（実行確認用の完成コード）
+// 演習（実行確認用の完成コード）
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");
@@ -71,11 +71,10 @@ function updateBullets() {
   }
 }
 
-// 演習１：敵の大きさ 40、出現間隔 45 フレーム
-// 発展：敵ごとの速さを 1〜3 の乱数で決める
+// 演習１：敵の大きさ 40、出現間隔 45 フレーム、速さ 3
 function updateEnemies() {
   if (frameCount % 45 === 0) {
-    enemies.push({ x: Math.floor(Math.random() * (canvas.width - 40)), y: -40, w: 40, h: 40, speed: Math.floor(Math.random() * 3) + 1 });
+    enemies.push({ x: Math.floor(Math.random() * (canvas.width - 40)), y: -40, w: 40, h: 40, speed: 3 });
   }
   for (let i = 0; i < enemies.length; i++) {
     enemies[i].y += enemies[i].speed;

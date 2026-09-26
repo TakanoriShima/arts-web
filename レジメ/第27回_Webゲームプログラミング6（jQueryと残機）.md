@@ -22,7 +22,7 @@ Web_名前
 ```
 
 - `sample`：講義で使うサンプル（講義内容のコードは、`sample/main.js` に書き足す）
-- `exercise`：自分のシューティングゲーム（演習１〜２、発展）
+- `exercise`：自分のシューティングゲーム（演習１〜２）
 - 今回は、`index.html` に残機の表示と、jQuery の読み込みを追加する。`style.css` は変更しない。
 
 ## 講義内容
@@ -39,12 +39,9 @@ Web_名前
 
 ### 2. jQuery とは
 
-jQuery（ジェイクエリー）は、Web ページの HTML を JavaScript で操作するための道具（ライブラリ）。第 20 回から使っている「要素を取り出して、中身を書き換える」ことを、短く書ける。
+jQuery（ジェイクエリー）は、HTML を JavaScript で操作するための道具（ライブラリ）。第 20 回で、JavaScript に最初から用意されている方法（`getElementById` と `.textContent`）を学んだ。だから今回は、「同じことを、別の書き方で短く書ける」と比べて理解できる。
 
-| | Vanilla JavaScript（第 20・26 回） | jQuery（今回） |
-|---|---|---|
-| 要素を取り出す | `document.getElementById("score")` | `$("#score")` |
-| 中の文字を書き換える | `要素.textContent = score;` | `$("#score").text(score);` |
+![HTML の表示欄 span id="score" を、第 20・26 回は document.getElementById と textContent で、第 27 回は jQuery の $("#score").text(score) で書き換える](images/lesson27/fig01-vanilla-jquery.svg)
 
 - `$("#score")`：`id` が `score` の要素を取り出す。`#` は、前期の CSS の「ID セレクタ」（`#title { }`）と同じ意味。
 - `.text(値)`：取り出した要素の中の文字を、その値に書き換える。
@@ -193,10 +190,6 @@ function update() {
 
 - `exercise/index.html` の得点の表示欄に、残機の表示（`LIVES: <span id="lives">3</span>`）を追加する。
 - `lives` の変数と `checkPlayerHit` を追加し、敵にぶつかると残機が減って、表示も変わるようにする。
-
-### 発展（任意）
-
-- 敵を倒せずに、画面の下へ逃してしまったら、得点を 50 減らす。得点が 0 より小さくならないようにし、表示も更新する。（ヒント：`removeEnemies` の中で、敵を消すときに行う。）
 
 ## この回の終わりの `sample/main.js` 全体
 

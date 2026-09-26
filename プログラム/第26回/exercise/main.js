@@ -1,4 +1,4 @@
-// 演習・発展（実行確認用の完成コード）
+// 演習（実行確認用の完成コード）
 
 // ===== 準備 =====
 const canvas = document.getElementById("game");

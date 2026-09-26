@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="250" viewBox="0 0 600 250" font-family="Yu Gothic, Meiryo, sans-serif" font-size="14">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="600" height="250" fill="#fff"/>
+  <!-- row 1: keydown -->
+  <rect x="10" y="20" width="150" height="50" rx="6" fill="#eee" stroke="#000" stroke-width="2"/>
+  <text x="85" y="42" text-anchor="middle" font-weight="bold">← を押す</text>
+  <text x="85" y="60" text-anchor="middle">（keydown）</text>
+  <rect x="220" y="20" width="160" height="50" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="300" y="42" text-anchor="middle">isLeftPressed</text>
+  <text x="300" y="60" text-anchor="middle" font-weight="bold">= true</text>
+  <rect x="440" y="20" width="150" height="50" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="515" y="42" text-anchor="middle">updatePlayer</text>
+  <text x="515" y="60" text-anchor="middle">毎フレーム 左へ動く</text>
+  <line x1="162" y1="45" x2="216" y2="45" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="382" y1="45" x2="436" y2="45" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <!-- row 2: keyup -->
+  <rect x="10" y="130" width="150" height="50" rx="6" fill="#eee" stroke="#000" stroke-width="2"/>
+  <text x="85" y="152" text-anchor="middle" font-weight="bold">← を離す</text>
+  <text x="85" y="170" text-anchor="middle">（keyup）</text>
+  <rect x="220" y="130" width="160" height="50" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="300" y="152" text-anchor="middle">isLeftPressed</text>
+  <text x="300" y="170" text-anchor="middle" font-weight="bold">= false</text>
+  <rect x="440" y="130" width="150" height="50" rx="6" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="515" y="152" text-anchor="middle">updatePlayer</text>
+  <text x="515" y="170" text-anchor="middle">動かない（止まる）</text>
+  <line x1="162" y1="155" x2="216" y2="155" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <line x1="382" y1="155" x2="436" y2="155" stroke="#000" stroke-width="2" marker-end="url(#a)"/>
+  <text x="300" y="220" text-anchor="middle" font-size="13">イベントでは「押されているか」を記録するだけ。動かすのはゲームループの updatePlayer。</text>
+</svg>
